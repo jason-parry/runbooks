@@ -1,0 +1,31 @@
+---
+AATEST11:
+  subscription: SUB-JPSBX
+  resourcegroup: JPAA01
+  tags:
+    costCentre: 0001
+    Environment: Development
+  modules:
+    powershell-yaml:
+      link: "https://www.powershellgallery.com/api/v2/package/powershell-yaml/0.4.3"
+  runbooks:
+    Hello-World:
+      filename: hello-world.ps1
+      log_verbose: true
+      log_progress: true
+      description: "This is an example runbook"
+      runbook_type: PowerShell
+  schedules:
+    Hello-World:
+      frequency: "Week"
+      interval: 1
+      timezone: "Australia/Perth"
+      start_time: "2022-11-12T02:00:00+08:00"
+      description: "This is an example schedule"
+      week_days: ["Friday"]
+  job_schedules:
+    Hello-World:
+      runbook_name: Hello-World
+      parameters:
+        testparam1: "testparam1value"
+        testparam2: "testparam2value"
