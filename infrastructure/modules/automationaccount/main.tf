@@ -20,6 +20,18 @@ resource "azurerm_automation_account" "aa" {
   sku_name            = "Basic"
 }
 
+resource "azurerm_automation_module" "psmodule" {
+  for_each = var.modules
+  name                    = each.key
+  resource_group_name     = data.azurerm_resource_group.rg.name
+  automation_account_name = azurerm_automation_account.aa.name
+
+  module_link {
+    uri = each.value.link
+  }
+}
+
+
 # data "local_file" "example" {
 #   filename = "${path.module}/../../scripts/hello-world.ps1"
 # }
