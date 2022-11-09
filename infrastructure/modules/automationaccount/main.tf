@@ -10,14 +10,14 @@ terraform {
 }
 
 data "azurerm_resource_group" "rg" {
-  name     = var.resourcegroup
+  name = var.resourcegroup
 }
 
 resource "azurerm_automation_account" "aa" {
   name                = var.name
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
-  sku_name = "Basic"
+  sku_name            = "Basic"
 }
 
 # data "local_file" "example" {

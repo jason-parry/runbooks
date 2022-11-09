@@ -23,26 +23,26 @@ variable "resourcegroup" {
 }
 
 variable "tags" {
-  type        = map
+  type        = map(any)
   description = "Automation Account Tags"
 }
 
 variable "modules" {
-  type        = map
+  type        = map(any)
   description = "Automation Account Modules"
 }
 
 variable "runbooks" {
-  type        = map
+  type        = map(any)
   description = "Automation Account Runbooks"
 }
 
 variable "schedules" {
-  type        = map
+  type        = map(any)
   description = "Automation Account Schedules"
 }
 
 variable "job_schedules" {
-  type        = map
+  type        = map(any)
   description = "Automation Account Job Schedules"
 }
