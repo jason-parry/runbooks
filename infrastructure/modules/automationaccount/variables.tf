@@ -32,7 +32,7 @@ variable "modules" {
   description = "Automation Account Modules"
 }
 
-variable "runbookfolder" {
+variable "runbook_root_folder" {
   type        = string
   description = "Folder that runbooks are stored in"
 }

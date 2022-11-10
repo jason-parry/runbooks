@@ -11,7 +11,7 @@ terraform {
 
 locals {
   runbook_file_map = {
-    for key, value in var.runbooks : key => "${var.runbookfolder}/${value.filename}"
+    for key, value in var.runbooks : key => "${var.runbook_root_folder}/${value.filename}"
   }
 }
 

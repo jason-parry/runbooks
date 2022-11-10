@@ -35,7 +35,7 @@ locals {
         resourcegroup = data.resourcegroup
         tags          = try(data.tags, {})
         modules       = try(data.modules, {})
-        runbookfolder = data.runbookfolder
+        runbook_root_folder = data.runbook_root_folder
         runbooks      = try(data.runbooks, {})
         schedules     = try(data.schedules, {})
         job_schedules = try(data.job_schedules, {})
@@ -56,7 +56,7 @@ module "automationaccount" {
   resourcegroup = each.value.resourcegroup
   tags          = each.value.tags
   modules       = each.value.modules
-  runbookfolder = each.value.runbookfolder
+  runbook_root_folder = each.value.runbook_root_folder
   runbooks      = each.value.runbooks
   schedules     = each.value.schedules
   job_schedules = each.value.job_schedules
