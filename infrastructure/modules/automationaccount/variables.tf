@@ -1,12 +1,3 @@
-# name          = name
-# subscription  = data.subscription
-# resourcegroup = data.resourcegroup
-# tags          = try(data.tags, {})
-# modules       = try(data.modules, {})
-# runbooks      = try(data.runbooks, {})
-# schedules     = try(data.schedules, {})
-# job_schedules = try(data.job_schedules, {})
-
 variable "name" {
   type        = string
   description = "Automation Account Name"
@@ -20,6 +11,18 @@ variable "subscription" {
 variable "resourcegroup" {
   type        = string
   description = "Resource Group Name"
+}
+
+variable "identity_type" {
+  type        = string
+  description = "Identity Type"
+  default     = "SystemAssigned"
+}
+
+variable "identity_ids" {
+  type        = list(string)
+  description = "A list of managed identity ids"
+  default     = []
 }
 
 variable "tags" {

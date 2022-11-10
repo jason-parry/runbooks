@@ -24,10 +24,16 @@ resource "azurerm_automation_account" "aa" {
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
   sku_name            = "Basic"
+
+  identity {
+    type         = var.identity_type
+    identity_ids = var.identity_ids
+  }
+
 }
 
 resource "azurerm_automation_module" "psmodule" {
-  for_each = var.modules
+  for_each                = var.modules
   name                    = each.key
   resource_group_name     = data.azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.aa.name
@@ -43,7 +49,7 @@ data "local_file" "runbook_file" {
 }
 
 resource "azurerm_automation_runbook" "runbook" {
-  for_each = var.runbooks
+  for_each                = var.runbooks
   name                    = each.key
   location                = data.azurerm_resource_group.rg.location
   resource_group_name     = data.azurerm_resource_group.rg.name
@@ -52,11 +58,11 @@ resource "azurerm_automation_runbook" "runbook" {
   log_progress            = each.value.log_progress
   description             = each.value.description
   runbook_type            = each.value.runbook_type
-  content = data.local_file.runbook_file[each.key].content
+  content                 = data.local_file.runbook_file[each.key].content
 }
 
 resource "azurerm_automation_schedule" "schedule" {
-  for_each = var.schedules
+  for_each                = var.schedules
   name                    = each.key
   resource_group_name     = data.azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.aa.name
@@ -69,7 +75,7 @@ resource "azurerm_automation_schedule" "schedule" {
 }
 
 resource "azurerm_automation_job_schedule" "job_schedule" {
-  for_each = var.job_schedules
+  for_each                = var.job_schedules
   resource_group_name     = data.azurerm_resource_group.rg.name
   automation_account_name = azurerm_automation_account.aa.name
   schedule_name           = each.value.schedule_name

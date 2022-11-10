@@ -30,15 +30,17 @@ locals {
   definitions_list = flatten([
     for file in local.definitions_file_list : [
       for name, data in yamldecode(file("${local.definitions_path}/${file}")) : {
-        name          = name
-        subscription  = data.subscription
-        resourcegroup = data.resourcegroup
-        tags          = try(data.tags, {})
-        modules       = try(data.modules, {})
+        name                = name
+        subscription        = data.subscription
+        resourcegroup       = data.resourcegroup
+        identity_type       = data.identity_type
+        identity_ids        = data.identity_ids
+        tags                = try(data.tags, {})
+        modules             = try(data.modules, {})
         runbook_root_folder = data.runbook_root_folder
-        runbooks      = try(data.runbooks, {})
-        schedules     = try(data.schedules, {})
-        job_schedules = try(data.job_schedules, {})
+        runbooks            = try(data.runbooks, {})
+        schedules           = try(data.schedules, {})
+        job_schedules       = try(data.job_schedules, {})
       }
     ]
   ])
@@ -51,33 +53,18 @@ module "automationaccount" {
   providers = {
     azurerm = azurerm.SUB-JPSBX
   }
-  name          = each.value.name
-  subscription  = each.value.subscription
-  resourcegroup = each.value.resourcegroup
-  tags          = each.value.tags
-  modules       = each.value.modules
+  name                = each.value.name
+  subscription        = each.value.subscription
+  resourcegroup       = each.value.resourcegroup
+  identity_type       = each.value.identity_type
+  identity_ids        = each.value.identity_ids
+  tags                = each.value.tags
+  modules             = each.value.modules
   runbook_root_folder = each.value.runbook_root_folder
-  runbooks      = each.value.runbooks
-  schedules     = each.value.schedules
-  job_schedules = each.value.job_schedules
+  runbooks            = each.value.runbooks
+  schedules           = each.value.schedules
+  job_schedules       = each.value.job_schedules
 
 }
 
-# output "definitions_path" {
-#   value = local.definitions_path
-# }
-
-# output "definitions_file_list" {
-#   value = local.definitions_file_list
-# }
-
-# output "definitions_map" {
-#   value = local.definitions_map
-# }
-
-
-# Debug output
-# output "runbook_file_list" {
-#   value = module.automationaccount["AATEST10"].runbook_file_list
-# }
 
