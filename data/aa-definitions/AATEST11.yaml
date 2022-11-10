@@ -8,6 +8,7 @@ AATEST11:
   modules:
     powershell-yaml:
       link: "https://www.powershellgallery.com/api/v2/package/powershell-yaml/0.4.3"
+  runbookfolder: ../../runbooks
   runbooks:
     Hello-World:
       filename: hello-world.ps1

@@ -8,12 +8,19 @@ AATEST10:
   modules:
     powershell-yaml:
       link: "https://www.powershellgallery.com/api/v2/package/powershell-yaml/0.4.3"
+  runbookfolder: ../../runbooks
   runbooks:
     Hello-World:
       filename: hello-world.ps1
       log_verbose: true
       log_progress: true
       description: "This is an example runbook"
+      runbook_type: PowerShell
+    Hello-World2:
+      filename: hello-world2.ps1
+      log_verbose: false
+      log_progress: false
+      description: "This is an example runbook 2"
       runbook_type: PowerShell
   schedules:
     Hello-World:

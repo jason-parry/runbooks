@@ -35,6 +35,7 @@ locals {
         resourcegroup = data.resourcegroup
         tags          = try(data.tags, {})
         modules       = try(data.modules, {})
+        runbookfolder = data.runbookfolder
         runbooks      = try(data.runbooks, {})
         schedules     = try(data.schedules, {})
         job_schedules = try(data.job_schedules, {})
@@ -55,6 +56,7 @@ module "automationaccount" {
   resourcegroup = each.value.resourcegroup
   tags          = each.value.tags
   modules       = each.value.modules
+  runbookfolder = each.value.runbookfolder
   runbooks      = each.value.runbooks
   schedules     = each.value.schedules
   job_schedules = each.value.job_schedules
@@ -72,3 +74,10 @@ module "automationaccount" {
 # output "definitions_map" {
 #   value = local.definitions_map
 # }
+
+
+# Debug output
+# output "runbook_file_list" {
+#   value = module.automationaccount["AATEST10"].runbook_file_list
+# }
+

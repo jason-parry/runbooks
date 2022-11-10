@@ -9,6 +9,12 @@ terraform {
   # required_version = ">= 1.2.2"
 }
 
+locals {
+  runbook_file_map = {
+    for key, value in var.runbooks : key => "${var.runbookfolder}/${value.filename}"
+  }
+}
+
 data "azurerm_resource_group" "rg" {
   name = var.resourcegroup
 }
@@ -31,23 +37,27 @@ resource "azurerm_automation_module" "psmodule" {
   }
 }
 
+data "local_file" "runbook_file" {
+  for_each = local.runbook_file_map
+  filename = each.value
+}
 
-# data "local_file" "example" {
-#   filename = "${path.module}/../../scripts/hello-world.ps1"
+# output "runbook_file_list" {
+#   value = local.runbook_file_list
 # }
 
-# resource "azurerm_automation_runbook" "example" {
-#   name                    = "Hello-World"
-#   location                = data.azurerm_resource_group.example.location
-#   resource_group_name     = data.azurerm_resource_group.example.name
-#   automation_account_name = azurerm_automation_account.example.name
-#   log_verbose             = "true"
-#   log_progress            = "true"
-#   description             = "This is an example runbook"
-#   runbook_type            = "PowerShell"
-
-#   content = data.local_file.example.content
-# }
+resource "azurerm_automation_runbook" "runbook" {
+  for_each = var.runbooks
+  name                    = each.key
+  location                = data.azurerm_resource_group.rg.location
+  resource_group_name     = data.azurerm_resource_group.rg.name
+  automation_account_name = azurerm_automation_account.aa.name
+  log_verbose             = each.value.log_verbose
+  log_progress            = each.value.log_progress
+  description             = each.value.description
+  runbook_type            = each.value.runbook_type
+  content = data.local_file.runbook_file[each.key].content
+}
 
 # resource "azurerm_automation_schedule" "example" {
 #   name                    = "hw-automation-schedule"
@@ -70,16 +80,5 @@ resource "azurerm_automation_module" "psmodule" {
 #   parameters = {
 #     resourcegroup = "tf-rgr-vm"
 #     vmname        = "TF-VM-01"
-#   }
-# }
-
-# resource "azurerm_automation_module" "example" {
-
-#   name                    = "powershell-yaml"
-#   resource_group_name     = data.azurerm_resource_group.example.name
-#   automation_account_name = azurerm_automation_account.example.name
-
-#   module_link {
-#     uri = "https://www.powershellgallery.com/api/v2/package/powershell-yaml/0.4.3"
 #   }
 # }

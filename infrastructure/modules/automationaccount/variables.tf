@@ -32,6 +32,11 @@ variable "modules" {
   description = "Automation Account Modules"
 }
 
+variable "runbookfolder" {
+  type        = string
+  description = "Folder that runbooks are stored in"
+}
+
 variable "runbooks" {
   type        = map(any)
   description = "Automation Account Runbooks"
