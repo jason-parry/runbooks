@@ -8,6 +8,8 @@ AATEST10:
   modules:
     powershell-yaml:
       link: "https://www.powershellgallery.com/api/v2/package/powershell-yaml/0.4.3"
+    pslogging:
+      link: "https://www.powershellgallery.com/api/v2/package/pslogging/2.5.2"
   runbook_root_folder: ../../runbooks
   runbooks:
     Hello-World:
@@ -30,6 +32,13 @@ AATEST10:
       start_time: "2022-11-12T03:00:00+08:00"
       description: "This is an example schedule - changed"
       week_days: ["Friday"]
+    Hello-World2:
+      frequency: "Week"
+      interval: 1
+      timezone: "Australia/Perth"
+      start_time: "2022-11-12T03:30:00+08:00"
+      description: "This is an example schedule"
+      week_days: ["Friday"]
   job_schedules:
     Hello-World:
       runbook_name: Hello-World
@@ -37,3 +46,9 @@ AATEST10:
       parameters:
         testparam1: "testparam1value"
         testparam2: "testparam2value - changed"
+    Hello-World2:
+      runbook_name: Hello-World2
+      schedule_name: Hello-World2
+      parameters:
+        testparam1: "HW 2 Param 1"
+        testparam2: "HW 2 Param 2"
