@@ -42,10 +42,6 @@ data "local_file" "runbook_file" {
   filename = each.value
 }
 
-# output "runbook_file_list" {
-#   value = local.runbook_file_list
-# }
-
 resource "azurerm_automation_runbook" "runbook" {
   for_each = var.runbooks
   name                    = each.key
@@ -59,17 +55,18 @@ resource "azurerm_automation_runbook" "runbook" {
   content = data.local_file.runbook_file[each.key].content
 }
 
-# resource "azurerm_automation_schedule" "example" {
-#   name                    = "hw-automation-schedule"
-#   resource_group_name     = data.azurerm_resource_group.example.name
-#   automation_account_name = azurerm_automation_account.example.name
-#   frequency               = "Week"
-#   interval                = 1
-#   timezone                = "Australia/Perth"
-#   start_time              = "2022-11-12T02:00:00+08:00"
-#   description             = "This is an example schedule"
-#   week_days               = ["Friday"]
-# }
+resource "azurerm_automation_schedule" "schedule" {
+  for_each = var.schedules
+  name                    = each.key
+  resource_group_name     = data.azurerm_resource_group.rg.name
+  automation_account_name = azurerm_automation_account.aa.name
+  frequency               = each.value.frequency
+  interval                = each.value.interval
+  timezone                = each.value.timezone
+  start_time              = each.value.start_time
+  description             = each.value.description
+  week_days               = each.value.week_days
+}
 
 # resource "azurerm_automation_job_schedule" "example" {
 #   resource_group_name     = data.azurerm_resource_group.example.name
