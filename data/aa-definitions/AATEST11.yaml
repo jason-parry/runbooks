@@ -27,6 +27,7 @@ AATEST11:
   job_schedules:
     Hello-World:
       runbook_name: Hello-World
+      schedule_name: Hello-World
       parameters:
         testparam1: "testparam1value"
         testparam2: "testparam2value"

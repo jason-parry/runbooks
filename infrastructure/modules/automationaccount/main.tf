@@ -68,14 +68,12 @@ resource "azurerm_automation_schedule" "schedule" {
   week_days               = each.value.week_days
 }
 
-# resource "azurerm_automation_job_schedule" "example" {
-#   resource_group_name     = data.azurerm_resource_group.example.name
-#   automation_account_name = azurerm_automation_account.example.name
-#   schedule_name           = azurerm_automation_schedule.example.name
-#   runbook_name            = azurerm_automation_runbook.example.name
+resource "azurerm_automation_job_schedule" "job_schedule" {
+  for_each = var.job_schedules
+  resource_group_name     = data.azurerm_resource_group.rg.name
+  automation_account_name = azurerm_automation_account.aa.name
+  schedule_name           = each.value.schedule_name
+  runbook_name            = each.value.runbook_name
 
-#   parameters = {
-#     resourcegroup = "tf-rgr-vm"
-#     vmname        = "TF-VM-01"
-#   }
-# }
+  parameters = each.value.parameters
+}
