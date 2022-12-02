@@ -87,6 +87,12 @@ jobs:
     - name: Terraform Format
       run: terraform -chdir=infrastructure/sandbox fmt -check
 
+
+    - name: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform -chdir=infrastructure/sandbox plan -input=false
