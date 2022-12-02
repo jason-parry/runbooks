@@ -50,9 +50,9 @@ locals {
 module "automationaccount" {
   for_each = local.definitions_map
   source   = "../modules/automationaccount"
-  providers = {
-    azurerm = azurerm.SUB-JPSBX
-  }
+#   providers = {
+#     azurerm = azurerm.SUB-JPSBX
+#   }
   name                = each.value.name
   subscription        = each.value.subscription
   resourcegroup       = each.value.resourcegroup
