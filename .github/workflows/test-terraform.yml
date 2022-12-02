@@ -75,11 +75,6 @@ jobs:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: pwd
-      run: pwd
-
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform -chdir=infrastructure/sandbox init
 
@@ -87,21 +82,9 @@ jobs:
     - name: Terraform Format
       run: terraform -chdir=infrastructure/sandbox fmt -check
 
-    - shell: bash
-      env:
-        SUPER_SECRET: ${{ secrets.AZURE_TENANT_ID }}
-      run: |
-        echo "$SUPER_SECRET"
-
-    - shell: pwsh
-      env:
-        SUPER_SECRET: ${{ secrets.AZURE_TENANT_ID }}
-      run: |
-        write-output "$env:SUPER_SECRET"
-
     - name: Azure Login
       #uses: Azure/login@v1.4.6
-      run: az login --service-principal -u "$($env:AZURE_CLIENT_ID)" -s "$($env:AZURE_CLIENT_SECRET)" -t "$($env:AZURE_TENANT_ID)"
+      run: az login --service-principal -u "$($env:ARM_CLIENT_ID)" -s "$($env:ARM_CLIENT_SECRET)" -t "$($env:ARM_TENANT_ID)"
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
