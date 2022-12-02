@@ -87,6 +87,18 @@ jobs:
     - name: Terraform Format
       run: terraform -chdir=infrastructure/sandbox fmt -check
 
+    - shell: bash
+      env:
+        SUPER_SECRET: ${{ secrets.AZURE_TENANT_ID }}
+      run: |
+        example-command "$SUPER_SECRET"
+
+    - shell: pwsh
+      env:
+        SUPER_SECRET: ${{ secrets.AZURE_TENANT_ID }}
+      run: |
+        example-command "$env:SUPER_SECRET"
+
     - name: Azure Login
       #uses: Azure/login@v1.4.6
       run: az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -s ${{ secrets.AZURE_CLIENT_SECRET }} -t ${{ secrets.AZURE_TENANT_ID }}
