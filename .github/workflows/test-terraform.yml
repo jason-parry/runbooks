@@ -48,7 +48,7 @@ jobs:
 #         # TenantId of the Azure Service principal created.
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 #         # Azure subscriptionId
-          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+         #subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 #         # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
 #         enable-AzPSSession: # optional
 #         # Name of the environment. Supported values are azurecloud, azurestack, azureusgovernment, azurechinacloud, azuregermancloud. Default being azurecloud
