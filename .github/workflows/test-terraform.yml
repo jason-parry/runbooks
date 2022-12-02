@@ -85,7 +85,7 @@ jobs:
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
-      run: terraform -chdir=infrastructure/sandboxfmt -check
+      run: terraform -chdir=infrastructure/sandbox fmt -check
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
