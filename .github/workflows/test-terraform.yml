@@ -63,7 +63,7 @@ jobs:
       run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color
 
     - name: Comment PR
-      if: github.ref != 'refs/heads/"main"' #&& github.event_name == 'push'
+      if: ${{ github.event_name == 'pull_request' }}
       uses: thollander/actions-comment-pull-request@v2
       with:
         comment_tag: showplan
