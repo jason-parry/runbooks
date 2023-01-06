@@ -59,13 +59,15 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
     - name: Terraform Show Plan
+      id: show_plan
       run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color
 
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v2
       with:
+        comment_tag: showplan
         message: |
-          Hello world ! :wave:
+          ${{steps.show_plan.outputs.stdout}}
         GITHUB_TOKEN: ${{ secrets.TERRAFORMPAT }}
 
 #       # On push to "main", build or change infrastructure according to Terraform configuration files
