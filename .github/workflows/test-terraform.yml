@@ -67,6 +67,7 @@ jobs:
       with:
         comment_tag: showplan
         message: |
+          *Terraform Plan*
           ${{steps.show_plan.outputs.stdout}}
         GITHUB_TOKEN: ${{ secrets.TERRAFORMPAT }}
 
