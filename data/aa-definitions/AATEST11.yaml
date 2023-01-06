@@ -5,7 +5,7 @@ AATEST11:
   identity_type: "SystemAssigned"
   identity_ids: []
   tags:
-    costCentre: "0002"
+    costCentre: "0001"
     Environment: Development
   modules:
     powershell-yaml:
