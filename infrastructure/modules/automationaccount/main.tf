@@ -24,6 +24,7 @@ resource "azurerm_automation_account" "aa" {
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
   sku_name            = "Basic"
+  tags                = var.tags
 
   identity {
     type         = var.identity_type
