@@ -6,7 +6,7 @@ AATEST11:
   identity_ids: []
   tags:
     costCentre: 0001
-    Environment: Development
+    Environment: User Acceptance Testing
   modules:
     powershell-yaml:
       link: "https://www.powershellgallery.com/api/v2/package/powershell-yaml/0.4.3"
