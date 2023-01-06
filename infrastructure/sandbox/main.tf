@@ -7,12 +7,12 @@ terraform {
     }
   }
 
-  # backend "azurerm" {
-  #   resource_group_name  = "tfstate"
-  #   storage_account_name = "tfstate871h"
-  #   container_name       = "tfstate"
-  #   key                  = "terraform.tfstate"
-  # }
+  backend "azurerm" {
+    resource_group_name  = "JPAA01"
+    storage_account_name = "tfstatejpsbx"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 
   required_version = ">= 1.2.2"
 }
