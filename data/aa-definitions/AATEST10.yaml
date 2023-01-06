@@ -2,8 +2,8 @@
 AATEST10:
   subscription: SUB-JPSBX
   resourcegroup: JPAA01
-  identity_type: "SystemAssigned"
-  identity_ids: []
+  identity_type: "SystemAssigned, UserAssigned"
+  identity_ids: ["/subscriptions/f016bccd-36f9-4589-aacb-c2b50df8b535/resourceGroups/JPAA01/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AATESTMANAGEDID"]
   tags:
     costCentre: 0001
     Environment: Development
