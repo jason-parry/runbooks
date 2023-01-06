@@ -123,6 +123,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: tfplan
+        path: infrastructure/sandbox
 
     - name: Terraform Apply
       run: terraform -chdir=infrastructure/sandbox apply -auto-approve -input=false plan.tfplan
