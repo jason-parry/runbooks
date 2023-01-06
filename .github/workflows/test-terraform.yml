@@ -63,6 +63,11 @@ jobs:
       id: show_plan
       run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color
 
+    - uses: actions/upload-artifact@v3
+      with:
+        name: tfplan
+        path: plan.tfplan
+
     - name: Comment PR
       if: ${{ github.event_name == 'pull_request' }}
       uses: thollander/actions-comment-pull-request@v2
