@@ -68,7 +68,7 @@ jobs:
         comment_tag: showplan
         message: |
           # Terraform Plan
-          `${{steps.show_plan.outputs.stdout}}`
+          ```${{steps.show_plan.outputs.stdout}}```
         GITHUB_TOKEN: ${{ secrets.TERRAFORMPAT }}
 
 #       # On push to "main", build or change infrastructure according to Terraform configuration files
