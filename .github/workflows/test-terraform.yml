@@ -79,6 +79,12 @@ jobs:
           infrastructure/sandbox/tfplan.binary
           infrastructure/sandbox/tfplanshow.txt
 
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az storage blob upload-batch --account-name tfstatejpsbx --auth-mode key -d 'tfstate' -s infrastructure/sandbox/tfplanshow.txt
+
     - name: Comment PR
       if: ${{ github.event_name == 'pull_request' }}
       uses: thollander/actions-comment-pull-request@v2
