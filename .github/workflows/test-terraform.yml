@@ -65,7 +65,10 @@ jobs:
 
     - name: Save Terraform Plan to file
       id: save_show_plan
-      run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > tfplanshow.txt
+      run: |
+        terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > tfplanshow.txt
+        pwd
+        ls
 
     - name: Upload tfplan
       uses: actions/upload-artifact@v3
