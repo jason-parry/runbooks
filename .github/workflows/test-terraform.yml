@@ -52,7 +52,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform -chdir=infrastructure/sandbox plan -input=false -out=plan.tfplan
+      run: terraform -chdir=infrastructure/sandbox plan -input=false -out=tfplan.binary
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -61,11 +61,11 @@ jobs:
 
     - name: Terraform Show Plan
       id: show_plan
-      run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color
+      run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color
 
     - name: Save Terraform Plan to file
       id: save_show_plan
-      run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color > tfplanshow.txt
+      run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > tfplanshow.txt
 
     - name: Upload tfplan
       uses: actions/upload-artifact@v3
@@ -141,7 +141,7 @@ jobs:
         path: infrastructure/sandbox
 
     - name: Terraform Apply
-      run: terraform -chdir=infrastructure/sandbox apply -auto-approve -input=false plan.tfplan
+      run: terraform -chdir=infrastructure/sandbox apply -auto-approve -input=false tfplan.binary
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
