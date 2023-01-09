@@ -90,6 +90,12 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
 
+    - name: Request review
+      uses: actions/request_review@v2
+      with:
+        reviewers: jason-parry
+
+
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
