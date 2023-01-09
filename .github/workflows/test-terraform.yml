@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: plan
 
+    outputs:
+      envtouse: ${{ steps.compare_plan.outputs.envtouse }}
+
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
@@ -86,11 +89,15 @@ jobs:
           ```${{steps.show_plan.outputs.stdout}}```
         GITHUB_TOKEN: ${{ secrets.TERRAFORMPAT }}
 
+    - name: Compare Plan
+      id: compare_plan
+      run: echo "envtouse=production" >> $GITHUB_OUTPUT
+
   Apply:
     name: 'Apply'
     needs: Plan
     runs-on: ubuntu-latest
-    environment: production
+    environment: ${{needs.Plan.outputs.envtouse}}
     defaults:
       run:
         shell: bash
