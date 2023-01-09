@@ -64,7 +64,7 @@ jobs:
       run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color
 
     - name: Save Terraform Plan to file
-      id: show_plan
+      id: save_show_plan
       run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color > tfplanshow.txt
 
     - name: Upload tfplan
