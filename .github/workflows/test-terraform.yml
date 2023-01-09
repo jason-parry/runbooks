@@ -83,7 +83,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload --account-name tfstatejpsbx --auth-mode login -d -c tfstate -n tfplanshow.txt -f infrastructure/sandbox/tfplanshow.txt
+            az storage blob upload --account-name tfstatejpsbx --auth-mode login -c tfstate -n tfplanshow.txt -f infrastructure/sandbox/tfplanshow.txt
 
     - name: Comment PR
       if: ${{ github.event_name == 'pull_request' }}
