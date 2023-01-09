@@ -93,7 +93,7 @@ jobs:
     - name: Request review
       uses: trstringer/manual-approval@v1
       with:
-        secret: ${{ secrets.TERRAFORMPAT }}
+        secret: ${{ secrets.TERRAFORMPATAPPROVE }}
         approvers: jason-parry
         minimum-approvals: 1
         issue-title: "Test approval stage"
