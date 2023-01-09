@@ -13,7 +13,7 @@ jobs:
   Plan:
     name: 'Plan'
     runs-on: ubuntu-latest
-    environment: production
+    environment: plan
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -90,14 +90,14 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
 
-    - name: Request review
-      uses: trstringer/manual-approval@v1
-      with:
-        secret: ${{ secrets.TERRAFORMPATAPPROVE }}
-        approvers: jason-parry
-        minimum-approvals: 1
-        issue-title: "Test approval stage"
-        exclude-workflow-initiator-as-approver: false
+    # - name: Request review
+    #   uses: trstringer/manual-approval@v1
+    #   with:
+    #     secret: ${{ secrets.TERRAFORMPATAPPROVE }}
+    #     approvers: jason-parry
+    #     minimum-approvals: 1
+    #     issue-title: "Test approval stage"
+    #     exclude-workflow-initiator-as-approver: false
 
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
