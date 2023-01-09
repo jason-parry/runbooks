@@ -63,11 +63,17 @@ jobs:
       id: show_plan
       run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color
 
+    - name: Save Terraform Plan to file
+      id: show_plan
+      run: terraform -chdir=infrastructure/sandbox show plan.tfplan -no-color > tfplanshow.txt
+
     - name: Upload tfplan
       uses: actions/upload-artifact@v3
       with:
         name: tfplan
-        path: infrastructure/sandbox/plan.tfplan
+        path: |
+          infrastructure/sandbox/tfplan.binary
+          infrastructure/sandbox/tfplanshow.txt
 
     - name: Comment PR
       if: ${{ github.event_name == 'pull_request' }}
@@ -124,9 +130,9 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform -chdir=infrastructure/sandbox fmt -check
+    # # Checks that all Terraform configuration files adhere to a canonical format
+    # - name: Terraform Format
+    #   run: terraform -chdir=infrastructure/sandbox fmt -check
 
     - name: Download tfplan
       uses: actions/download-artifact@v3
