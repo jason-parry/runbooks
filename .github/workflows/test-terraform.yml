@@ -91,10 +91,13 @@ jobs:
     steps:
 
     - name: Request review
-      uses: actions/request_review@v2
+      uses: trstringer/manual-approval@v1
       with:
-        reviewers: jason-parry
-
+        secret: ${{ github.TOKEN }}
+        approvers: jason-parry
+        minimum-approvals: 1
+        issue-title: "Test approval stage"
+        exclude-workflow-initiator-as-approver: false
 
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
