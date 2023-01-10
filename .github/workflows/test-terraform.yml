@@ -68,8 +68,7 @@ jobs:
 
     - name: Save Terraform Plan to file
       id: save_show_plan
-      run: |
-        terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > infrastructure/sandbox/tfplanshow.txt
+      run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > infrastructure/sandbox/tfplanshow.txt
 
     - name: Upload tfplan
       uses: actions/upload-artifact@v3
@@ -83,7 +82,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name tfstatejpsbx --auth-mode key -d 'tfstate' -s infrastructure/sandbox/tfplanshow.txt
+            az storage blob upload --account-name tfstatejpsbx --auth-mode key -c tfstate -n tfplanshow.txt -f infrastructure/sandbox/tfplanshow.txt --overwrite
 
     - name: Comment PR
       if: ${{ github.event_name == 'pull_request' }}
@@ -97,7 +96,7 @@ jobs:
 
     - name: Compare Plan
       id: compare_plan
-      run: echo "envtouse=plan" >> $GITHUB_OUTPUT
+      run: echo "envtouse=production" >> $GITHUB_OUTPUT
 
   Apply:
     name: 'Apply'
