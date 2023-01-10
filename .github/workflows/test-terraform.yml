@@ -96,7 +96,7 @@ jobs:
 
     - name: Compare Plan
       id: compare_plan
-      run: echo "envtouse=plan" >> $GITHUB_OUTPUT
+      run: echo "envtouse=production" >> $GITHUB_OUTPUT
 
   Apply:
     name: 'Apply'
