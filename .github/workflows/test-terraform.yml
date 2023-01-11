@@ -105,7 +105,7 @@ jobs:
         # test gh
         pr_url=$(gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search $SHA)
         echo "$pr_url"
-        pr_number=$(echo "$pr_url" | sed -n 'https:\/\/github\.com\/.*\/.*\/pull\/(\d*)')
+        echo "$pr_url" | sed -E 's|https://github\.com/[^/]*/[^/]*/pull/(\d*)|\1|g'
         echo "$pr_number"
       env:
         GH_TOKEN: ${{ github.token }}
