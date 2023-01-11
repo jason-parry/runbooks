@@ -103,9 +103,9 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       run: |
         # test gh
-        $pr_url=$(gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search $SHA)
+        pr_url=$(gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search $SHA)
         echo "$pr_url"
-        $pr_number=$(echo "$pr_url" | sed -n 'https:\/\/github\.com\/.*\/.*\/pull\/(\d*)')
+        pr_number=$(echo "$pr_url" | sed -n 'https:\/\/github\.com\/.*\/.*\/pull\/(\d*)')
         echo "$pr_number"
       env:
         GH_TOKEN: ${{ github.token }}
