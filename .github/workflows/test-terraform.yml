@@ -147,6 +147,14 @@ jobs:
     # - name: Terraform Format
     #   run: terraform -chdir=infrastructure/sandbox fmt -check
 
+    - name: Get PR linked to this commit
+      run: |
+        # test gh
+        gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search $SHA
+      env:
+        GH_TOKEN: ${{ github.token }}
+        SHA: ${{ github.sha }}
+
     - name: Download tfplan
       uses: actions/download-artifact@v3
       with:
