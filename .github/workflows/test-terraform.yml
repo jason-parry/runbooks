@@ -66,11 +66,14 @@ jobs:
       id: show_plan
       run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color
 
+
     - name: Save Terraform Plan to file
+      if: ${{ github.event_name == 'pull_request' }}
       id: save_show_plan
       run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > infrastructure/sandbox/tfplanshow-${{ github.event.pull_request.number }}.txt
 
     - name: Upload tfplan
+      if: ${{ github.event_name != 'pull_request' }}
       uses: actions/upload-artifact@v3
       with:
         name: tfplan
@@ -79,6 +82,7 @@ jobs:
           infrastructure/sandbox/tfplanshow-${{ github.event.pull_request.number }}.txt
 
     - name: Upload to blob storage
+      if: ${{ github.event_name == 'pull_request' }}
       uses: azure/CLI@v1
       with:
         inlineScript: |
@@ -93,8 +97,22 @@ jobs:
           # Terraform Plan
           ```${{steps.show_plan.outputs.stdout}}```
         GITHUB_TOKEN: ${{ secrets.TERRAFORMPAT }}
+    
+
+    - name: Get PR linked to this commit
+      if: ${{ github.event_name != 'pull_request' }}
+      run: |
+        # test gh
+        $pr_url=$(gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search $SHA)
+        echo "$pr_url"
+        $pr_number=$(echo "$pr_url" | sed -n 'https:\/\/github\.com\/.*\/.*\/pull\/(\d*)')
+        echo "$pr_number"
+      env:
+        GH_TOKEN: ${{ github.token }}
+        SHA: ${{ github.sha }}
 
     - name: Compare Plan
+      if: ${{ github.event_name != 'pull_request' }}
       id: compare_plan
       run: echo "envtouse=production" >> $GITHUB_OUTPUT
 
@@ -146,14 +164,6 @@ jobs:
     # # Checks that all Terraform configuration files adhere to a canonical format
     # - name: Terraform Format
     #   run: terraform -chdir=infrastructure/sandbox fmt -check
-
-    - name: Get PR linked to this commit
-      run: |
-        # test gh
-        gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search $SHA
-      env:
-        GH_TOKEN: ${{ github.token }}
-        SHA: ${{ github.sha }}
 
     - name: Download tfplan
       uses: actions/download-artifact@v3
