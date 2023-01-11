@@ -1,7 +1,10 @@
+name: 'Test Merge'
 on:
-  pull_request:
+  pull_request_target:
     types:
       - closed
+    branches:
+      - main
 
 jobs:
   if_merged:
