@@ -82,7 +82,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload --account-name tfstatejpsbx --auth-mode key -c tfstate -n tfplanshow.txt -f infrastructure/sandbox/tfplanshow.txt --overwrite
+            az storage blob upload --account-name tfstatejpsbx --auth-mode key -c tfstate -n tfplanshow.txt -f infrastructure/sandbox/tfplanshow-${{ github.event.pull_request.number }}.txt --overwrite
 
     - name: Comment PR
       if: ${{ github.event_name == 'pull_request' }}
