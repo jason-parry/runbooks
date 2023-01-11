@@ -11,3 +11,5 @@ jobs:
     - run: |
         # test gh
         gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search 'd6322aead012dcbdb1ab670b6dc10cf236f89a0e'
+      env:
+        GH_TOKEN: ${{ github.token }}
