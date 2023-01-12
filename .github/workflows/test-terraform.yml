@@ -70,7 +70,7 @@ jobs:
     - name: Save Terraform Plan to file
       if: ${{ github.event_name == 'pull_request' }}
       id: save_show_plan
-      run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > infrastructure/sandbox/tfplanshow-${{ github.event.pull_request.number }}.txt
+      run: terraform -chdir=infrastructure/sandbox show tfplan.binary -no-color > infrastructure/sandbox/tfplanshow${{ github.event.pull_request.number }}.txt
 
     - name: Upload tfplan
       if: ${{ github.event_name != 'pull_request' }}
@@ -79,14 +79,14 @@ jobs:
         name: tfplan
         path: |
           infrastructure/sandbox/tfplan.binary
-          infrastructure/sandbox/tfplanshow-${{ github.event.pull_request.number }}.txt
+          infrastructure/sandbox/tfplanshow${{ github.event.pull_request.number }}.txt
 
     - name: Upload to blob storage
       if: ${{ github.event_name == 'pull_request' }}
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload --account-name tfstatejpsbx --auth-mode key -c tfstate -n tfplanshow-${{ github.event.pull_request.number }}.txt -f infrastructure/sandbox/tfplanshow-${{ github.event.pull_request.number }}.txt --overwrite
+            az storage blob upload --account-name tfstatejpsbx --auth-mode key -c tfstate -n tfplanshow${{ github.event.pull_request.number }}.txt -f infrastructure/sandbox/tfplanshow${{ github.event.pull_request.number }}.txt --overwrite
 
     - name: Comment PR
       if: ${{ github.event_name == 'pull_request' }}
@@ -98,18 +98,15 @@ jobs:
           ```${{steps.show_plan.outputs.stdout}}```
         GITHUB_TOKEN: ${{ secrets.TERRAFORMPAT }}
     
-
     - name: Get PR linked to this commit
       if: ${{ github.event_name != 'pull_request' }}
       run: |
-        # test gh
-        pr_url=$(gh pr list --repo https://github.com/jason-parry/runbooks --state merged --json url --jq .[].url --search $SHA)
-        echo "$pr_url"
-        echo "$pr_url" | sed -E 's|https://github\.com/[^/]*/[^/]*/pull/(\d*)|\1|g'
-        echo "$pr_number"
+        pr_url=$(gh pr list --repo https://github.com/${{ github.repository }} --state merged --json url --jq .[].url --search ${{ github.sha }})
+        echo "pr_url=$pr_url"
+        pr_number=$(echo "$pr_url" | sed -E 's|https://github\.com/[^/]*/[^/]*/pull/(\d*)|\1|g')
+        echo "pr_number=$pr_number"
       env:
         GH_TOKEN: ${{ github.token }}
-        SHA: ${{ github.sha }}
 
     - name: Compare Plan
       if: ${{ github.event_name != 'pull_request' }}
